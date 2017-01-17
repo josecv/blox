@@ -1,10 +1,9 @@
 #include "Blox.h"
-#include "Logger.h"
 
 using namespace blox;
 
-Blox::Blox() : _window(SCREEN_WIDTH, SCREEN_HEIGHT) {
-  Logger::init("blox.log");
+Blox::Blox() : _window(SCREEN_WIDTH, SCREEN_HEIGHT), _frame(_window.getRenderer()) {
+  _window.addObject(&_frame);
 }
 
 Blox::~Blox() {
@@ -12,9 +11,6 @@ Blox::~Blox() {
 }
 
 void Blox::run() {
-  if (!_window.init()) {
-    return;
-  }
   bool quit = false;
   SDL_Event e;
   while (!quit) {

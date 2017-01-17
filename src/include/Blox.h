@@ -1,6 +1,7 @@
 #ifndef BLOX_BLOX_H
 #define BLOX_BLOX_H
 #include "Window.h"
+#include "Frame.h"
 
 namespace blox {
 class Blox {
@@ -8,7 +9,7 @@ class Blox {
   /**
    * The width of the screen.
    */
-  static const int SCREEN_WIDTH = 850;
+  static const int SCREEN_WIDTH = 650;
 
   /**
    * The height of the screen.
@@ -34,6 +35,11 @@ class Blox {
    * The window.
    */
   Window _window;
+
+  /**
+   * The playing frame.
+   */
+  Frame _frame;
 };
 };
 

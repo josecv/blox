@@ -24,12 +24,6 @@ class Window {
   ~Window();
 
   /**
-   * Initialize the window.
-   * @return whether it worked.
-   */
-  bool init();
-
-  /**
    * Add the object given to the list of objects that render to this window.
    * @param o the object to add.
    */
@@ -40,7 +34,19 @@ class Window {
    * @return did it work
    */
   bool render();
+
+  /**
+   * Get the renderer for this window.
+   * @return the renderer.
+   */
+  SDL_Renderer *getRenderer();
  private:
+  /**
+   * Initialize the window.
+   * @return whether it worked.
+   */
+  bool init();
+
   /**
    * The SDL window.
    */
@@ -70,6 +76,11 @@ class Window {
    * Whether we managed to start sdl.
    */
   bool _sdlInitialized;
+
+  /**
+   * Whether we managed to start sdl_image.
+   */
+  bool _imgInitialized;
 
   /**
    * The objects that render here.

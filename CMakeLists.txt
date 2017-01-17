@@ -7,6 +7,9 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 file(GLOB sources src/*.cc)
 add_executable(${PROJECT_NAME} ${sources})
 
+file(GLOB pngs assets/*.png)
+file(COPY ${pngs} DESTINATION "${CMAKE_BINARY_DIR}/assets")
+
 INCLUDE(FindPkgConfig)
 
 PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)

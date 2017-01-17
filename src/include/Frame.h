@@ -10,13 +10,26 @@ class Frame : public Object {
  public:
   /**
    * Construct a new frame.
+   * @param renderer the renderer that the texture will belong to.
    */
-  Frame();
+  Frame(SDL_Renderer *renderer);
+
+  /**
+   * Destroy the frame.
+   */
+  ~Frame();
+
   /**
    * Render the frame.
    * @param renderer the renderer to render into.
    */
   virtual bool render(SDL_Renderer *renderer);
+
+ private:
+  /**
+   * The texture of the frame.
+   */
+  SDL_Texture *_texture;
 };
 };
 
