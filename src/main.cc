@@ -1,12 +1,11 @@
 #include <SDL.h>
-#include <Window.h>
 #include <stdio.h>
+#include "Blox.h"
 
 using namespace blox;
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
 int main(int argc, char **argv) {
+  Blox blox;
+  blox.run();
   return 0;
 }

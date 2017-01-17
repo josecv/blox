@@ -8,12 +8,12 @@ class Blox {
   /**
    * The width of the screen.
    */
-  static const int SCREEN_WIDTH = 640;
+  static const int SCREEN_WIDTH = 850;
 
   /**
    * The height of the screen.
    */
-  static const int SCREEN_HEIGHT = 480;
+  static const int SCREEN_HEIGHT = 900;
 
   /**
    * CTOR.

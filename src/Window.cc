@@ -3,15 +3,15 @@
 
 using namespace blox;
 
-Window::Window(int width, int height) {
-  _window = NULL;
-  _screenSurface = NULL;
-  _width = width;
-  _height = height;
-  _sdlInitialized = false;
+Window::Window(int width, int height) : _window(NULL), _renderer(NULL),
+                                        _screenSurface(NULL), _width(width),
+                                        _height(height), _sdlInitialized(false) {
 }
 
 Window::~Window() {
+  if (_renderer) {
+    SDL_DestroyRenderer(_renderer);
+  }
   if (_window) {
     SDL_DestroyWindow(_window);
   }
@@ -26,13 +26,32 @@ bool Window::init() {
     return false;
   }
   _sdlInitialized = true;
-  _window = SDL_CreateWindow("Tutorial", SDL_WINDOWPOS_UNDEFINED,
-                            SDL_WINDOWPOS_UNDEFINED, _width,
-                            _height, SDL_WINDOW_SHOWN);
+  _window = SDL_CreateWindow("Blox", SDL_WINDOWPOS_UNDEFINED,
+                             SDL_WINDOWPOS_UNDEFINED, _width,
+                             _height, SDL_WINDOW_SHOWN);
   if (_window == NULL) {
     Logger::error(SDL_GetError(), "Window::init");
     return false;
   }
+  _renderer = SDL_CreateRenderer(_window, -1,
+      SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  if (_renderer == NULL) {
+    Logger::error(SDL_GetError(), "Window::init");
+    return false;
+  }
   _screenSurface = SDL_GetWindowSurface(_window);
+  return true;
+}
+
+void Window::addObject(Object *o) {
+  _objects.push_back(o);
+}
+
+bool Window::render() {
+  SDL_RenderClear(_renderer);
+  for (auto o : _objects) {
+    o->render(_renderer);
+  }
+  SDL_RenderPresent(_renderer);
   return true;
 }
