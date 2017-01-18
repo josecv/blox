@@ -40,6 +40,11 @@ class Blox {
    * The playing frame.
    */
   Frame _frame;
+
+  /**
+   * The texture for the pieces.
+   */
+  SDL_Texture *_pieceTexture;
 };
 };
 
