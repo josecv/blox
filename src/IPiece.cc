@@ -1,5 +1,7 @@
 #include "IPiece.h"
 #include "Grid.h"
+#include "Frame.h"
+#include <iostream>
 
 using namespace blox;
 
@@ -15,17 +17,19 @@ bool IPiece::renderTo(int xpos, int ypos, SDL_Renderer *renderer) {
   srcrect.h = 40;
   dstrect.w = 40;
   dstrect.h = 40;
+  bool okay = true;
   if (!(_rotation % 2)) {
     dstrect.x = xpos;
     for (int y = ypos - 80, block = 0; block < 4; block++, y += 40) {
-      if (y >= 70) {
+      if (y >= Frame::TOP_HEIGHT) {
         dstrect.y = y;
-        SDL_RenderCopy(renderer, _pieceTexture, &srcrect, &dstrect);
+        okay = okay &&
+          (SDL_RenderCopy(renderer, _pieceTexture, &srcrect, &dstrect) == 0);
       }
     }
   }
 
-  return true;
+  return okay;
 }
 
 bool IPiece::checkLeft(int xCandidate) {

@@ -33,9 +33,11 @@ void Blox::run() {
   bool quit = false;
   SDL_Event e;
 
-  IPiece piece(_pieceTexture, 1000);
+  IPiece piece(_pieceTexture, 500);
   Bottom bottom;
   _window.addObject(&piece);
+
+  bool moving = true;
 
   while (!quit) {
     while (SDL_PollEvent(&e) != 0) {
@@ -44,8 +46,8 @@ void Blox::run() {
       }
     }
     _window.render();
-    if (piece.fall(&bottom)) {
-      quit = true;
+    if (moving && piece.fall(&bottom)) {
+      moving = false;
     }
   }
 }

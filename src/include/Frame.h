@@ -30,7 +30,7 @@ class Frame : public Object {
   /**
    * Pixel height of the top part of the frame.
    */
-  static const int TOP_HEIGHT = 200;
+  static const int TOP_HEIGHT = 70;
 
   /**
    * Pixel height of the bottom part of the frame.
