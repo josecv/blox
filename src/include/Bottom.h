@@ -1,6 +1,7 @@
 #ifndef BLOX_BOTTOM_H
 #define BLOX_BOTTOM_H
 #include "Object.h"
+#include "PieceType.h"
 
 namespace blox {
 
@@ -17,6 +18,14 @@ class Bottom : public Object {
    * @return whether there's a collision
    */
   bool willCollide(int xgrid, int ygrid);
+
+  /**
+   * Place a block of the piecetype given at the location given.
+   * @param xgrid the x grid position
+   * @param ygrid the y grid position
+   * @return whether there's a collision.
+   */
+  void place(int xgrid, int ygrid, PieceType piece);
 
   bool render(SDL_Renderer *renderer);
 };

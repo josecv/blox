@@ -2,6 +2,7 @@
 #define BLOX_PIECE_H
 #include "Object.h"
 #include "Bottom.h"
+#include "PieceType.h"
 
 namespace blox {
 
@@ -41,8 +42,6 @@ class Piece : public Object {
    */
   bool fall(Bottom *bottom);
 
-  bool render(SDL_Renderer *renderer);
-
  protected:
   /**
    * The grid x position of the centre of the piece.
@@ -65,14 +64,15 @@ class Piece : public Object {
   SDL_Texture *_pieceTexture;
 
   /**
-   * Render this piece to the pixel position given.
-   *
-   * @param xpos the pixel x position of the centre
-   * @param ypos the pixel y position of the centre
+   * Render a block to the location given.
+   * @param xgrid the x grid location.
+   * @param ygrid the y grid location
    * @param renderer the renderer
-   * @return whether it worked
+   * @param type the piece type.
+   * @return whether it succeeded
    */
-  virtual bool renderTo(int xpos, int ypos, SDL_Renderer *renderer) = 0;
+  bool renderBlock(int xgrid, int ygrid, SDL_Renderer *renderer,
+                   PieceType type);
 
   /**
    * Check that the piece won't collide with the left wall if we move

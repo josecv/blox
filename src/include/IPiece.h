@@ -11,7 +11,7 @@ class IPiece : public Piece {
  protected:
   using Piece::Piece;
 
-  bool renderTo(int xpos, int ypos, SDL_Renderer *renderer);
+  bool render(SDL_Renderer *renderer);
 
   bool checkLeft(int xCandidate);
 
