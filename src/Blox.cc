@@ -34,7 +34,7 @@ void Blox::run() {
   SDL_Event e;
 
   IPiece piece(_pieceTexture, 500);
-  Bottom bottom;
+  Bottom bottom(_pieceTexture);
   _window.addObject(&piece);
 
   bool moving = true;

@@ -64,17 +64,6 @@ class Piece : public Object {
   SDL_Texture *_pieceTexture;
 
   /**
-   * Render a block to the location given.
-   * @param xgrid the x grid location.
-   * @param ygrid the y grid location
-   * @param renderer the renderer
-   * @param type the piece type.
-   * @return whether it succeeded
-   */
-  bool renderBlock(int xgrid, int ygrid, SDL_Renderer *renderer,
-                   PieceType type);
-
-  /**
    * Check that the piece won't collide with the left wall if we move
    * the centre to xCandidate.
    * @param xCandidate the candidate centre x position.

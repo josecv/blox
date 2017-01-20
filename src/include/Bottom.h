@@ -2,6 +2,7 @@
 #define BLOX_BOTTOM_H
 #include "Object.h"
 #include "PieceType.h"
+#include "Grid.h"
 
 namespace blox {
 
@@ -11,6 +12,12 @@ namespace blox {
  */
 class Bottom : public Object {
  public:
+  /**
+   * CTOR.
+   * @param pieceTexture the texture for the blocks.
+   */
+  Bottom(SDL_Texture *pieceTexture);
+
   /**
    * Return whether the x, y position is hitting a piece on the bottom.
    * @param xgrid the x grid position
@@ -28,6 +35,19 @@ class Bottom : public Object {
   void place(int xgrid, int ygrid, PieceType piece);
 
   bool render(SDL_Renderer *renderer);
+
+ private:
+  /**
+   * The texture for the blocks.
+   */
+  SDL_Texture *_pieceTexture;
+
+  /**
+   * The grid containing all the block data.
+   * The most significant halfbyte is turned on if there's a block,
+   * the least significant halfbyte indicates its colour.
+   */
+  Uint8 _grid[Grid::GRID_HEIGHT][Grid::GRID_WIDTH];
 };
 
 };

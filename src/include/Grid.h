@@ -1,5 +1,6 @@
 #ifndef BLOX_UTIL_H
 #define BLOX_UTIL_H
+#include "PieceType.h"
 
 namespace blox {
 
@@ -30,6 +31,17 @@ class Grid {
    * @return the pixel position
    */
   static int yGridToPixel(int ypos);
+
+  /**
+   * Render a block to the location given.
+   * @param xgrid the x grid location.
+   * @param ygrid the y grid location
+   * @param renderer the renderer
+   * @param type the piece type.
+   * @return whether it succeeded
+   */
+  static bool renderBlock(int xgrid, int ygrid, SDL_Renderer *renderer,
+                          PieceType type, SDL_Texture *pieceTexture);
 };
 
 };

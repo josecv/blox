@@ -11,7 +11,7 @@ bool IPiece::render(SDL_Renderer *renderer) {
   bool okay = true;
   if (!(_rotation % 2)) {
     for (int y = _ypos - 2, block = 0; block < 4; block++, y++) {
-      okay = okay && renderBlock(_xpos, y, renderer, PIECE_I);
+      okay = okay && Grid::renderBlock(_xpos, y, renderer, PIECE_I, _pieceTexture);
     }
   }
 

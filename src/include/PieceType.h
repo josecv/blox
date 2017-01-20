@@ -9,7 +9,8 @@ typedef enum {
   PIECE_O,
   PIECE_S,
   PIECE_T,
-  PIECE_Z
+  PIECE_Z,
+  PIECE_LAST
 } PieceType;
 };
 
