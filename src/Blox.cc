@@ -1,6 +1,5 @@
 #include "Blox.h"
 #include "IPiece.h"
-
 #include <SDL_image.h>
 #include "Logger.h"
 #include "InitializationException.h"
@@ -33,7 +32,7 @@ void Blox::run() {
   bool quit = false;
   SDL_Event e;
 
-  IPiece piece(_pieceTexture, 500);
+  IPiece piece(_pieceTexture, 1000);
   Bottom bottom(_pieceTexture);
   _window.addObject(&piece);
 
@@ -45,9 +44,19 @@ void Blox::run() {
         quit = true;
       }
     }
-    _window.render();
+    handleKeypress(&piece);
     if (moving && piece.fall(&bottom)) {
       moving = false;
     }
+    _window.render();
+  }
+}
+
+void Blox::handleKeypress(Piece *piece) {
+  const Uint8 *keyStates = SDL_GetKeyboardState(NULL);
+  if (keyStates[SDL_SCANCODE_LEFT]) {
+    piece->pushLeft();
+  } else if (keyStates[SDL_SCANCODE_RIGHT]) {
+    piece->pushRight();
   }
 }

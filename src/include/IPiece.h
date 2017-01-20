@@ -18,6 +18,13 @@ class IPiece : public Piece {
   bool checkRight(int xCandidate);
 
   bool hitsFloor(int yCandidate, Bottom *bottom);
+
+ private:
+  /**
+   * Return true if this is oriented vertically, else false.
+   * @return true if vertical.
+   */
+  bool isVertical();
 };
 
 };

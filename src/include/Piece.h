@@ -91,6 +91,11 @@ class Piece : public Object {
 
  private:
   /**
+   * How quick should a side push (left or right) happen.
+   */
+  static const Uint32 SIDE_PUSH_VELOCITY = 95;
+
+  /**
    * How many ticks does it take to fall one single position.
    */
   Uint32 _timeToFall;
@@ -99,6 +104,21 @@ class Piece : public Object {
    * Tick count as of our last fall.
    */
   Uint32 _timeLastFall;
+
+  /**
+   * Are we waiting for a left push.
+   */
+  bool _leftPush;
+
+  /**
+   * Are we waiting for a right push.
+   */
+  bool _rightPush;
+
+  /**
+   * The tick count at the time that the last side push was requested.
+   */
+  Uint32 _timeSidePush;
 };
 
 };

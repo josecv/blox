@@ -2,6 +2,7 @@
 #define BLOX_BLOX_H
 #include "Window.h"
 #include "Frame.h"
+#include "Piece.h"
 
 namespace blox {
 class Blox {
@@ -45,6 +46,12 @@ class Blox {
    * The texture for the pieces.
    */
   SDL_Texture *_pieceTexture;
+
+  /**
+   * Handle a keypress from the user.
+   * @param piece the current piece
+   */
+  void handleKeypress(Piece *piece);
 };
 };
 
