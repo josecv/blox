@@ -19,6 +19,8 @@ class IPiece : public Piece {
 
   bool hitsFloor(int yCandidate, Bottom *bottom);
 
+  void place(Bottom *bottom);
+
  private:
   /**
    * Return true if this is oriented vertically, else false.

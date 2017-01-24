@@ -5,7 +5,7 @@
 using namespace blox;
 
 bool Grid::renderBlock(int xgrid, int ygrid, SDL_Renderer *renderer,
-                       PieceType type, SDL_Texture *pieceTexture) {
+                       PieceType type) {
   /* The only place where there isn't any bounds checking is when the
    * piece is only starting to fall off the top. In that case, the centre
    * may be lower than the highest point of the piece, so just don't
@@ -24,7 +24,11 @@ bool Grid::renderBlock(int xgrid, int ygrid, SDL_Renderer *renderer,
   dstrect.h = 40;
   dstrect.x = Grid::xGridToPixel(xgrid);
   dstrect.y = Grid::yGridToPixel(ygrid);
-  return (SDL_RenderCopy(renderer, pieceTexture, &srcrect, &dstrect) == 0);
+  return (SDL_RenderCopy(renderer, _pieceTexture, &srcrect, &dstrect) == 0);
+}
+
+void Grid::setPieceTexture(SDL_Texture *pieceTexture) {
+  _pieceTexture = pieceTexture;
 }
 
 int Grid::xGridToPixel(int xpos) {

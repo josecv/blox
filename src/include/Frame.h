@@ -38,6 +38,16 @@ class Frame : public Object {
   static const int BOTTOM_HEIGHT = 30;
 
   /**
+   * The x location of the preview box.
+   */
+  static const int PREVIEW_X = 10;
+
+  /**
+   * The y location of the preview box.
+   */
+  static const int PREVIEW_Y = 120;
+
+  /**
    * Construct a new frame.
    * @param renderer the renderer that the texture will belong to.
    */

@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "Bottom.h"
 #include "PieceType.h"
+#include "Grid.h"
 
 namespace blox {
 
@@ -12,11 +13,17 @@ namespace blox {
 class Piece : public Object {
  public:
   /**
-   * CTOR.
-   * @param pieceTexture the texture containing all blocks.
+   * CTOR; places the piece at the middle of the grid (to work with
+   * the next piece preview).
+   * @param gridRenderer the grid renderer
    * @param timeToFall how many ticks it takes to fall one position.
    */
-  Piece(SDL_Texture *pieceTexture, Uint32 timeToFall);
+  Piece(Grid *gridRenderer, Uint32 timeToFall);
+
+  /**
+   * Destructor.
+   */
+  virtual ~Piece() { }
 
   /**
    * Rotate the piece.
@@ -42,6 +49,24 @@ class Piece : public Object {
    */
   bool fall(Bottom *bottom);
 
+  /**
+   * Reset the coordinates to the top of the play screen.
+   */
+  void resetCoordinates();
+
+  /**
+   * Set the grid renderer.
+   * @param gridRenderer the grid renderer to set.
+   */
+  void setGridRenderer(Grid *gridRenderer);
+
+  /**
+   * Place the piece at its current location on the bottom given.
+   * @param bottom the bottom
+   * @return how many lines got cleared by doing this.
+   */
+  virtual void place(Bottom *bottom) = 0;
+
  protected:
   /**
    * The grid x position of the centre of the piece.
@@ -59,9 +84,9 @@ class Piece : public Object {
   int _rotation;
 
   /**
-   * The texture containing all the blocks.
+   * The grid renderer.
    */
-  SDL_Texture *_pieceTexture;
+  Grid *_gridRenderer;
 
   /**
    * Check that the piece won't collide with the left wall if we move

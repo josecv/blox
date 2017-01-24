@@ -30,6 +30,12 @@ class Window {
   void addObject(Object* o);
 
   /**
+   * Remove the object given from the list of objects that render to this window.
+   * @param o the object to remove
+   */
+  void removeObject(Object *o);
+
+  /**
    * Render out the window with all containing objects.
    * @return did it work
    */

@@ -1,13 +1,12 @@
 #include "Piece.h"
-#include "Grid.h"
 
 using namespace blox;
 
-Piece::Piece(SDL_Texture *pieceTexture, Uint32 timeToFall) : _pieceTexture(pieceTexture),
-                                                             _timeToFall(timeToFall),
-                                                             _xpos(5), _ypos(0), _rotation(0),
-                                                             _timeLastFall(SDL_GetTicks()),
-                                                             _leftPush(false), _rightPush(false) {
+Piece::Piece(Grid *gridRenderer, Uint32 timeToFall) : _gridRenderer(gridRenderer),
+                                                      _timeToFall(timeToFall),
+                                                      _xpos(2), _ypos(2), _rotation(0),
+                                                      _timeLastFall(SDL_GetTicks()),
+                                                      _leftPush(false), _rightPush(false) {
 
 }
 
@@ -46,4 +45,13 @@ void Piece::pushRight() {
     _rightPush = true;
     _timeSidePush = SDL_GetTicks();
   }
+}
+
+void Piece::resetCoordinates() {
+  _xpos = 5;
+  _ypos = 0;
+}
+
+void Piece::setGridRenderer(Grid *gridRenderer) {
+  _gridRenderer = gridRenderer;
 }

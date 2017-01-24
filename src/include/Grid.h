@@ -1,6 +1,7 @@
-#ifndef BLOX_UTIL_H
-#define BLOX_UTIL_H
+#ifndef BLOX_GRID_H
+#define BLOX_GRID_H
 #include "PieceType.h"
+#include <SDL.h>
 
 namespace blox {
 
@@ -33,6 +34,11 @@ class Grid {
   static int yGridToPixel(int ypos);
 
   /**
+   * Set the piece texture.
+   */
+  void setPieceTexture(SDL_Texture *pieceTexture);
+
+  /**
    * Render a block to the location given.
    * @param xgrid the x grid location.
    * @param ygrid the y grid location
@@ -40,10 +46,15 @@ class Grid {
    * @param type the piece type.
    * @return whether it succeeded
    */
-  static bool renderBlock(int xgrid, int ygrid, SDL_Renderer *renderer,
-                          PieceType type, SDL_Texture *pieceTexture);
+  virtual bool renderBlock(int xgrid, int ygrid, SDL_Renderer *renderer,
+                           PieceType type);
+ protected:
+  /**
+   * The texture of the piece.
+   */
+  SDL_Texture *_pieceTexture;
 };
 
 };
 
-#endif /* BLOX_UTIL_H */
+#endif /* BLOX_GRID_H */

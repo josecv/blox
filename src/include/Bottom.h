@@ -16,7 +16,7 @@ class Bottom : public Object {
    * CTOR.
    * @param pieceTexture the texture for the blocks.
    */
-  Bottom(SDL_Texture *pieceTexture);
+  Bottom(Grid *grid);
 
   /**
    * Return whether the x, y position is hitting a piece on the bottom.
@@ -34,13 +34,20 @@ class Bottom : public Object {
    */
   void place(int xgrid, int ygrid, PieceType piece);
 
+  /**
+   * Clear any rows that have been filled, and drop everything down
+   * accordingly.
+   * @return the number of cleared rows.
+   */
+  int clearRows();
+
   bool render(SDL_Renderer *renderer);
 
  private:
   /**
-   * The texture for the blocks.
+   * The renderer for the grid.
    */
-  SDL_Texture *_pieceTexture;
+  Grid *_gridRenderer;
 
   /**
    * The grid containing all the block data.

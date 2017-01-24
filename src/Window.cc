@@ -1,8 +1,8 @@
 #include "Window.h"
 #include "Logger.h"
 #include "InitializationException.h"
-#include <iostream>
 #include <SDL_image.h>
+#include <algorithm>
 
 using namespace blox;
 
@@ -60,6 +60,10 @@ bool Window::init() {
 
 void Window::addObject(Object *o) {
   _objects.push_back(o);
+}
+
+void Window::removeObject(Object *o) {
+  _objects.erase(std::remove(_objects.begin(), _objects.end(), o), _objects.end());
 }
 
 bool Window::render() {

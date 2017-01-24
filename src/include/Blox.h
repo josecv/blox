@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Frame.h"
 #include "Piece.h"
+#include "NextPieceGrid.h"
 
 namespace blox {
 class Blox {
@@ -48,10 +49,42 @@ class Blox {
   SDL_Texture *_pieceTexture;
 
   /**
+   * The piece we're currently playing with.
+   */
+  Piece *_currentPiece;
+
+  /**
+   * The next piece that's gonna come down the pipeline.
+   */
+  Piece *_nextPiece;
+
+  /**
+   * The grid renderer.
+   */
+  Grid _gridRenderer;
+
+  /**
+   * The renderer for the next piece.
+   */
+  NextPieceGrid _nextPieceRenderer;
+
+  /**
    * Handle a keypress from the user.
    * @param piece the current piece
    */
   void handleKeypress(Piece *piece);
+
+  /**
+   * Put the next piece into the playing field, get rid of the current one
+   * and generate the one that's gonna come next.
+   * @param bottom the bottom of the playfield
+   */
+  void getNextPiece(Bottom *bottom);
+
+  /**
+   * Generate a random piece.
+   */
+  Piece *getRandomPiece();
 };
 };
 
