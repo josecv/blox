@@ -67,5 +67,12 @@ int Bottom::clearRows() {
 }
 
 bool Bottom::hitsTop() {
+  for (int y = 0; y < NUMBER_GHOST; y++) {
+    for (int x = 0; x < Grid::GRID_WIDTH; x++) {
+      if (_grid[y][x] & 0xF0) {
+        return true;
+      }
+    }
+  }
   return false;
 }

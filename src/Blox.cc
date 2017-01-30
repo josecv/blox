@@ -55,6 +55,10 @@ void Blox::run() {
       if (clear > 0) {
         printf("Cleared %d rows!\n", clear);
       }
+      if (bottom.hitsTop()) {
+        printf("Game over!\n");
+        quit = true;
+      }
     }
     _window.render();
   }
