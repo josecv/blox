@@ -51,8 +51,8 @@ bool Window::init() {
   }
   _ttfInitialized = true;
   _window = SDL_CreateWindow("Blox", SDL_WINDOWPOS_UNDEFINED,
-                             SDL_WINDOWPOS_UNDEFINED, _width,
-                             _height, SDL_WINDOW_SHOWN);
+                             SDL_WINDOWPOS_UNDEFINED, 577,
+                             800, SDL_WINDOW_SHOWN);
   if (_window == NULL) {
     Logger::error(SDL_GetError(), "Window::init");
     return false;
@@ -60,6 +60,10 @@ bool Window::init() {
   _renderer = SDL_CreateRenderer(_window, -1,
       SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (_renderer == NULL) {
+    Logger::error(SDL_GetError(), "Window::init");
+    return false;
+  }
+  if (SDL_RenderSetLogicalSize(_renderer, _width, _height) < 0) {
     Logger::error(SDL_GetError(), "Window::init");
     return false;
   }
