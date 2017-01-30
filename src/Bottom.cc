@@ -9,7 +9,7 @@ Bottom::Bottom(Grid *grid) : _gridRenderer(grid) {
   memset(_grid, 0, sizeof(char) * INTERNAL_HEIGHT * Grid::GRID_WIDTH);
 }
 
-bool Bottom::willCollide(int xgrid, int ygrid) {
+bool Bottom::collides(int xgrid, int ygrid) {
   ygrid = ygrid + NUMBER_GHOST;
   if (ygrid < 0) {
     return false;

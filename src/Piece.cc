@@ -17,9 +17,9 @@ bool Piece::fall(Bottom *bottom) {
   /* Deal with a side movement first */
   if ((_leftPush || _rightPush) &&
       ((ticks - _timeSidePush) >= SIDE_PUSH_VELOCITY)) {
-    if (_leftPush && checkLeft(_xpos - 1)) {
+    if (_leftPush && checkLeft(_xpos - 1, bottom)) {
       _xpos--;
-    } else if (_rightPush && checkRight(_xpos + 1)) {
+    } else if (_rightPush && checkRight(_xpos + 1, bottom)) {
       _xpos++;
     }
     _leftPush = false;
@@ -68,4 +68,60 @@ void Piece::resetCoordinates() {
 
 void Piece::setGridRenderer(Grid *gridRenderer) {
   _gridRenderer = gridRenderer;
+}
+
+bool Piece::render(SDL_Renderer *renderer) {
+  bool okay = true;
+  pieceLoop([&] (int x, int y) {
+    okay = okay && _gridRenderer->renderBlock(x, y, renderer, getType());
+    return true;
+  });
+
+  return okay;
+}
+
+void Piece::pieceLoop(std::function<bool (int, int)> func) {
+  pieceLoop(func, _xpos, _ypos);
+}
+
+bool Piece::hitsFloor(int yCandidate, Bottom *bottom) {
+  bool willHit = false;
+  pieceLoop([&] (int x, int y) {
+    if ((y + 1 >= Grid::GRID_HEIGHT) ||
+        bottom->collides(x, y + 1)) {
+      willHit = true;
+      return false;
+    }
+    return true;
+  }, _xpos, yCandidate);
+  return willHit;
+}
+
+void Piece::place(Bottom *bottom) {
+  pieceLoop([&] (int x, int y) {
+    bottom->place(x, y, getType());
+    return true;
+  });
+}
+
+bool Piece::checkLeft(int xCandidate, Bottom *bottom) {
+  bool okay = true;
+  pieceLoop([&] (int x, int y) {
+    if (x < 0 || bottom->collides(x, y)) {
+      okay = false;
+      return false;
+    }
+  }, xCandidate, _ypos);
+  return okay;
+}
+
+bool Piece::checkRight(int xCandidate, Bottom *bottom) {
+  bool okay = true;
+  pieceLoop([&] (int x, int y) {
+    if (x >= Grid::GRID_WIDTH || bottom->collides(x, y)) {
+      okay = false;
+      return false;
+    }
+  }, xCandidate, _ypos);
+  return okay;
 }

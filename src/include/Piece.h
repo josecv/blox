@@ -1,5 +1,6 @@
 #ifndef BLOX_PIECE_H
 #define BLOX_PIECE_H
+#include <functional>
 #include "Object.h"
 #include "Bottom.h"
 #include "PieceType.h"
@@ -63,9 +64,10 @@ class Piece : public Object {
   /**
    * Place the piece at its current location on the bottom given.
    * @param bottom the bottom
-   * @return how many lines got cleared by doing this.
    */
-  virtual void place(Bottom *bottom) = 0;
+  void place(Bottom *bottom);
+
+  bool render(SDL_Renderer *renderer);
 
  protected:
   /**
@@ -89,30 +91,33 @@ class Piece : public Object {
   Grid *_gridRenderer;
 
   /**
-   * Check that the piece won't collide with the left wall if we move
-   * the centre to xCandidate.
-   * @param xCandidate the candidate centre x position.
-   * @return true if it will NOT collide, else false.
+   * Return this piece's type.
+   * @return the piece type.
    */
-  virtual bool checkLeft(int xCandidate) = 0;
+  virtual PieceType getType() = 0;
 
   /**
-   * Check that the piece won't collide with the right wall if we move
-   * the centre to xCandidate.
-   * @param xCandidate the candidate centre x position
-   * @return true if it will NOT collide, else false.
+   * Loop over every block in the piece, calling the function given on each
+   * one of them.
+   * @param func the function to call on the blocks, receives x, y pos of the
+   *             block as argument.
    */
-  virtual bool checkRight(int xCandidate) = 0;
+  void pieceLoop(std::function<bool (int, int)> func);
 
   /**
-   * Return if placing the centre of the piece on the yCandidate
-   * given will cause it to stop moving because it has either hit the
-   * floor or hit one of the pieces on the floor.
-   * @param yCandidate the candidate y position
-   * @param bottom the bottom
-   * @return true if it will cause it to stop moving
+   * Loop over every block in the piece, calling the function given on each
+   * one of them, and assuming that the centre of the piece is at the
+   * xcandidate and ycandidate given.
+   * @param func the function to call on the blocks, receives x, y pos of the
+   *             block as argument. Should return true if we are to keep going
+   *             else false.
+   * @param xCandidate the x where we should assume the piece has been
+   *                   placed
+   * @param yCandidate the y where we should assume the piece has been
+   *                   placed
    */
-  virtual bool hitsFloor(int yCandidate, Bottom *bottom) = 0;
+  virtual void pieceLoop(std::function<bool (int, int)> func, int xCandidate,
+                         int yCandidate) = 0;
 
  private:
   /**
@@ -154,6 +159,34 @@ class Piece : public Object {
    * The tick count at the time that the last side push was requested.
    */
   Uint32 _timeSidePush;
+
+  /**
+   * Return if placing the centre of the piece on the yCandidate
+   * given will cause it to stop moving because it has either hit the
+   * floor or hit one of the pieces on the floor.
+   * @param yCandidate the candidate y position
+   * @param bottom the bottom
+   * @return true if it will cause it to stop moving
+   */
+  bool hitsFloor(int yCandidate, Bottom *bottom);
+
+  /**
+   * Check that the piece won't collide with the left wall if we move
+   * the centre to xCandidate.
+   * @param xCandidate the candidate centre x position.
+   * @param bottom the bottom set of pieces
+   * @return true if it will NOT collide, else false.
+   */
+  bool checkLeft(int xCandidate, Bottom *bottom);
+
+  /**
+   * Check that the piece won't collide with the right wall if we move
+   * the centre to xCandidate.
+   * @param xCandidate the candidate centre x position
+   * @param bottom the bottom with pieces
+   * @return true if it will NOT collide, else false.
+   */
+  bool checkRight(int xCandidate, Bottom *bottom);
 };
 
 };

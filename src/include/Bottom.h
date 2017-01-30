@@ -25,12 +25,12 @@ class Bottom : public Object {
   Bottom(Grid *grid);
 
   /**
-   * Return whether the x, y position is hitting a piece on the bottom.
+   * Return whether the x, y position contains a block.
    * @param xgrid the x grid position
    * @param ygrid the y grid position
-   * @return whether there's a collision
+   * @return whether there's already a block there
    */
-  bool willCollide(int xgrid, int ygrid);
+  bool collides(int xgrid, int ygrid);
 
   /**
    * Place a block of the piecetype given at the location given.

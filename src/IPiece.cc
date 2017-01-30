@@ -8,53 +8,23 @@ using namespace blox;
 
 /* The centre of the IPiece is the second block from the bottom. */
 
-bool IPiece::render(SDL_Renderer *renderer) {
-  bool okay = true;
-  if (isVertical()) {
-    for (int y = _ypos - 2, block = 0; block < 4; block++, y++) {
-      okay = okay && _gridRenderer->renderBlock(_xpos, y, renderer, PIECE_I);
-    }
-  } else {
-    /* XXX */
-  }
-
-  return okay;
-}
-
-bool IPiece::checkLeft(int xCandidate) {
-  if (isVertical()) {
-    return xCandidate >= 0;
-  }
-  /* XXX */
-  return true;
-}
-
-bool IPiece::checkRight(int xCandidate) {
-  if (isVertical()) {
-    return xCandidate < Grid::GRID_WIDTH;
-  }
-  return true;
-}
-
-bool IPiece::hitsFloor(int yCandidate, Bottom *bottom) {
-  if (isVertical()) {
-    if ((yCandidate + 2) >= Grid::GRID_HEIGHT) {
-      return true;
-    }
-    return bottom->willCollide(_xpos, _ypos + 2);
-  }
-  return false;
-}
-
-void IPiece::place(Bottom *bottom) {
-  if (isVertical()) {
-    for (int y = _ypos - 2, block = 0; block < 4; block++, y++) {
-      bottom->place(_xpos, y, PIECE_I);
-    }
-  }
-}
-
 bool IPiece::isVertical() {
   return (!(_rotation % 2));
 }
 
+void IPiece::pieceLoop(std::function<bool (int, int)> func, int xCandidate,
+                       int yCandidate) {
+  if (isVertical()) {
+    for (int y = yCandidate - 2; y <= yCandidate + 1; y++) {
+      if (!func(xCandidate, y)) {
+        return;
+      }
+    }
+  } else {
+    /* XXX */
+  }
+}
+
+PieceType IPiece::getType() {
+  return PIECE_I;
+}

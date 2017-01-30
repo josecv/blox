@@ -1,6 +1,7 @@
 #ifndef BLOX_LPIECE_H
 #define BLOX_LPIECE_H
 #include "Piece.h"
+#include <functional>
 
 namespace blox {
 
@@ -10,16 +11,10 @@ namespace blox {
 class IPiece : public Piece {
  protected:
   using Piece::Piece;
+  PieceType getType();
 
-  bool render(SDL_Renderer *renderer);
-
-  bool checkLeft(int xCandidate);
-
-  bool checkRight(int xCandidate);
-
-  bool hitsFloor(int yCandidate, Bottom *bottom);
-
-  void place(Bottom *bottom);
+  void pieceLoop(std::function<bool (int, int)> func, int xCandidate,
+                 int yCandidate);
 
  private:
   /**
