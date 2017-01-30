@@ -88,5 +88,5 @@ void Blox::getNextPiece(Bottom *bottom) {
 }
 
 Piece* Blox::getRandomPiece() {
-  return new IPiece(&_gridRenderer, 100);
+  return new IPiece(&_gridRenderer, 200);
 }

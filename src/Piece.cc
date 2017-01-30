@@ -111,6 +111,7 @@ bool Piece::checkLeft(int xCandidate, Bottom *bottom) {
       okay = false;
       return false;
     }
+    return true;
   }, xCandidate, _ypos);
   return okay;
 }
@@ -122,6 +123,7 @@ bool Piece::checkRight(int xCandidate, Bottom *bottom) {
       okay = false;
       return false;
     }
+    return true;
   }, xCandidate, _ypos);
   return okay;
 }
