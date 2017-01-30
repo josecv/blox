@@ -67,6 +67,9 @@ void Blox::handleKeypress(Piece *piece) {
   } else if (keyStates[SDL_SCANCODE_RIGHT]) {
     piece->pushRight();
   }
+  if (keyStates[SDL_SCANCODE_UP]) {
+    piece->rotate();
+  }
 }
 
 void Blox::getNextPiece(Bottom *bottom) {

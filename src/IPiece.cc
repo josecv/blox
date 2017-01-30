@@ -21,7 +21,11 @@ void IPiece::pieceLoop(std::function<bool (int, int)> func, int xCandidate,
       }
     }
   } else {
-    /* XXX */
+    for (int x = xCandidate - 2; x <= xCandidate + 1; x++) {
+      if (!func(x, yCandidate)) {
+        return;
+      }
+    }
   }
 }
 
