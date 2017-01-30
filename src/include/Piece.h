@@ -141,6 +141,16 @@ class Piece : public Object {
   bool _rightPush;
 
   /**
+   * Are we waiting to rotate.
+   */
+  bool _inRotation;
+
+  /**
+   * The tick counts at the time that the last rotation was requested.
+   */
+  Uint32 _timeRotation;
+
+  /**
    * The tick count at the time that the last side push was requested.
    */
   Uint32 _timeSidePush;

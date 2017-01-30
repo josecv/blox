@@ -28,6 +28,9 @@ Blox::Blox() : _window(SCREEN_WIDTH, SCREEN_HEIGHT),
 }
 
 Blox::~Blox() {
+  if (_currentPiece != NULL) {
+    delete _currentPiece;
+  }
   SDL_DestroyTexture(_pieceTexture);
 }
 
@@ -48,6 +51,10 @@ void Blox::run() {
     handleKeypress(_currentPiece);
     if (_currentPiece->fall(&bottom)) {
       getNextPiece(&bottom);
+      int clear = bottom.clearRows();
+      if (clear > 0) {
+        printf("Cleared %d rows!\n", clear);
+      }
     }
     _window.render();
   }
@@ -81,5 +88,5 @@ void Blox::getNextPiece(Bottom *bottom) {
 }
 
 Piece* Blox::getRandomPiece() {
-  return new IPiece(&_gridRenderer, 500);
+  return new IPiece(&_gridRenderer, 100);
 }

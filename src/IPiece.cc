@@ -41,11 +41,7 @@ bool IPiece::hitsFloor(int yCandidate, Bottom *bottom) {
     if ((yCandidate + 2) >= Grid::GRID_HEIGHT) {
       return true;
     }
-    for (int y = yCandidate - 2, block = 0; block < 4; block++, y++) {
-      if (bottom->willCollide(_xpos, y)) {
-        return true;
-      }
-    }
+    return bottom->willCollide(_xpos, _ypos + 2);
   }
   return false;
 }
