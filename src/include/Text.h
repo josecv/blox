@@ -64,7 +64,7 @@ class TextException : public std::exception {
  * This allows the strings to change between renders while they keep the same
  * id (say to update a score counter).
  */
-class Text : Object {
+class Text : public Object {
  public:
   /**
    * The maximum number of pieces of text supported for rendering.
@@ -74,7 +74,7 @@ class Text : Object {
   /**
    * The size of the font that we render.
    */
-  static const int FONT_SIZE = 14;
+  static const int FONT_SIZE = 20;
 
   /**
    * CTOR.
@@ -98,6 +98,13 @@ class Text : Object {
    */
   bool renderString(std::string text, int id, SDL_Renderer *renderer,
                     int x, int y);
+
+  /**
+   * Get the color for the text.
+   * By default just a plain white.
+   * @pram id the id of the text to get color for.
+   */
+  virtual SDL_Color getColor(int id);
 
  private:
 

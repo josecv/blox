@@ -1,15 +1,16 @@
+#include <algorithm>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "Window.h"
 #include "Logger.h"
 #include "InitializationException.h"
-#include <SDL_image.h>
-#include <algorithm>
 
 using namespace blox;
 
 Window::Window(int width, int height) : _window(NULL), _renderer(NULL),
                                         _screenSurface(NULL), _width(width),
                                         _height(height), _sdlInitialized(false),
-                                        _imgInitialized(false) {
+                                        _imgInitialized(false), _ttfInitialized(false) {
   if (!init()) {
     throw InitializationException("Window");
   }
@@ -21,6 +22,9 @@ Window::~Window() {
   }
   if (_window) {
     SDL_DestroyWindow(_window);
+  }
+  if (_ttfInitialized) {
+    TTF_Quit();
   }
   if (_imgInitialized) {
     IMG_Quit();
@@ -41,6 +45,11 @@ bool Window::init() {
     return false;
   }
   _imgInitialized = true;
+  if (TTF_Init() == -1) {
+    Logger::error(TTF_GetError(), "Window::init");
+    return false;
+  }
+  _ttfInitialized = true;
   _window = SDL_CreateWindow("Blox", SDL_WINDOWPOS_UNDEFINED,
                              SDL_WINDOWPOS_UNDEFINED, _width,
                              _height, SDL_WINDOW_SHOWN);

@@ -11,14 +11,14 @@ void Logger::init(string dest) {
 
 void Logger::error(string msg, string caller) {
   ofstream fout;
-  fout.open(instance._dest);
+  fout.open(instance._dest, std::ofstream::out | std::ofstream::app);
   fout << "ERROR: " << msg << " (" << caller << ")\n";
   fout.close();
 }
 
 void Logger::info(string msg, string caller) {
   ofstream fout;
-  fout.open(instance._dest);
+  fout.open(instance._dest, std::ofstream::out | std::ofstream::app);
   fout << "INFO: " << msg << " (" << caller << ")\n";
   fout.close();
 }

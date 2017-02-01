@@ -4,6 +4,7 @@
 #include "Frame.h"
 #include "Piece.h"
 #include "NextPieceGrid.h"
+#include "Score.h"
 
 namespace blox {
 class Blox {
@@ -42,6 +43,11 @@ class Blox {
    * The playing frame.
    */
   Frame _frame;
+
+  /**
+   * The current score.
+   */
+  Score _score;
 
   /**
    * The texture for the pieces.

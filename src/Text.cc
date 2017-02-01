@@ -29,15 +29,20 @@ bool Text::renderString(std::string text, int id, SDL_Renderer *renderer,
   return SDL_RenderCopy(renderer, _strings[id].texture, NULL, &dest) == 0;
 }
 
-void Text::openTexture(std::string text, int id, SDL_Renderer *renderer) {
+SDL_Color Text::getColor(int id) {
   SDL_Color color;
   /* It's just a plain white. */
   color.r = 0xFF;
   color.g = 0xFF;
   color.b = 0xFF;
   color.a = 0xFF;
+  return color;
+}
+
+void Text::openTexture(std::string text, int id, SDL_Renderer *renderer) {
+  SDL_Color color = getColor(id);
   SDL_Surface *surface = TTF_RenderText_Solid(_font, text.c_str(), color);
-  if (surface = NULL) {
+  if (surface == NULL) {
     Logger::error(TTF_GetError(), "Text::openTexture 1");
     throw TextException(text);
   }

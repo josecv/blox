@@ -89,6 +89,11 @@ class Window {
   bool _imgInitialized;
 
   /**
+   * Whether we managed to start sdl_ttf.
+   */
+  bool _ttfInitialized;
+
+  /**
    * The objects that render here.
    */
   std::vector<Object*> _objects;

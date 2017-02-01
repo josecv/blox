@@ -10,6 +10,7 @@ Blox::Blox() : _window(SCREEN_WIDTH, SCREEN_HEIGHT),
                _frame(_window.getRenderer()), _pieceTexture(NULL),
                _currentPiece(NULL), _nextPiece(NULL) {
   _window.addObject(&_frame);
+  _window.addObject(&_score);
 
   SDL_Surface *surface = IMG_Load("assets/blox_sprite.png");
   if (surface == NULL) {
@@ -53,7 +54,7 @@ void Blox::run() {
       getNextPiece(&bottom);
       int clear = bottom.clearRows();
       if (clear > 0) {
-        printf("Cleared %d rows!\n", clear);
+        _score.clearLines(clear);
       }
       if (bottom.hitsTop()) {
         printf("Game over!\n");
@@ -95,5 +96,5 @@ void Blox::getNextPiece(Bottom *bottom) {
 }
 
 Piece* Blox::getRandomPiece() {
-  return new IPiece(&_gridRenderer, 200);
+  return new IPiece(&_gridRenderer, _score.getFallDealy());
 }
