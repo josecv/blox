@@ -123,7 +123,7 @@ class Piece : public Object {
   /**
    * How quick should a side push (left or right) happen.
    */
-  static const Uint32 SIDE_PUSH_VELOCITY = 100;
+  static const Uint32 SIDE_PUSH_VELOCITY = 140;
 
   /**
    * How many ticks does it take to fall one single position.
