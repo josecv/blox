@@ -75,6 +75,9 @@ void Blox::handleKeypress(Piece *piece) {
   if (keyStates[SDL_SCANCODE_UP]) {
     piece->rotate();
   }
+  if (keyStates[SDL_SCANCODE_DOWN]) {
+    piece->hardDrop();
+  }
 }
 
 void Blox::getNextPiece(Bottom *bottom) {

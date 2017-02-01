@@ -42,6 +42,11 @@ class Piece : public Object {
   void pushRight();
 
   /**
+   * Start a hard drop.
+   */
+  void hardDrop();
+
+  /**
    * Increment the position of this piece based on the amount
    * of time that has passed since we last did so.
    *
@@ -151,6 +156,11 @@ class Piece : public Object {
   bool _inRotation;
 
   /**
+   * Are we waiting on a hard drop.
+   */
+  bool _hardDrop;
+
+  /**
    * The tick counts at the time that the last rotation was requested.
    */
   Uint32 _timeRotation;
@@ -159,6 +169,11 @@ class Piece : public Object {
    * The tick count at the time that the last side push was requested.
    */
   Uint32 _timeSidePush;
+
+  /**
+   * The tick count at the time that the hard drop was requested.
+   */
+  Uint32 _timeHardDrop;
 
   /**
    * Return if placing the centre of the piece on the yCandidate

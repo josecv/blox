@@ -7,8 +7,9 @@ Piece::Piece(Grid *gridRenderer, Uint32 timeToFall) : _gridRenderer(gridRenderer
                                                       _xpos(2), _ypos(2), _rotation(0),
                                                       _timeLastFall(SDL_GetTicks()),
                                                       _leftPush(false), _rightPush(false),
-                                                      _inRotation(false),
-                                                      _timeRotation(SDL_GetTicks()) {
+                                                      _inRotation(false), _hardDrop(false),
+                                                      _timeRotation(SDL_GetTicks()),
+                                                      _timeHardDrop(SDL_GetTicks()) {
 
 }
 
@@ -36,6 +37,13 @@ bool Piece::fall(Bottom *bottom) {
     }
     _inRotation = false;
   }
+  if (_hardDrop && ((ticks - _timeHardDrop) >= SIDE_PUSH_VELOCITY)) {
+    /* Time for the hard drop bby */
+    while (!hitsFloor(_ypos, bottom)) {
+      _ypos++;
+    }
+    return true;
+  }
   if ((ticks - _timeLastFall) >= _timeToFall) {
     _timeLastFall = ticks;
     _ypos++;
@@ -57,6 +65,13 @@ void Piece::pushRight() {
   if (!_leftPush && !_rightPush) {
     _rightPush = true;
     _timeSidePush = SDL_GetTicks();
+  }
+}
+
+void Piece::hardDrop() {
+  if (!_hardDrop) {
+    _hardDrop = true;
+    _timeHardDrop = SDL_GetTicks();
   }
 }
 
