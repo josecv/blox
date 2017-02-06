@@ -5,6 +5,7 @@
 #include "Piece.h"
 #include "NextPieceGrid.h"
 #include "Score.h"
+#include "Menu.h"
 
 namespace blox {
 class Blox {
@@ -50,6 +51,11 @@ class Blox {
   Score _score;
 
   /**
+   * The start menu.
+   */
+  Menu _menu;
+
+  /**
    * The texture for the pieces.
    */
   SDL_Texture *_pieceTexture;
@@ -73,6 +79,18 @@ class Blox {
    * The renderer for the next piece.
    */
   NextPieceGrid _nextPieceRenderer;
+
+  /**
+   * Run the menu.
+   * @return whether to keep going afterwards.
+   */
+  bool runMenu();
+
+  /**
+   * Run the actual game.
+   * @return whether to keep going
+   */
+  bool runGame();
 
   /**
    * Handle a keypress from the user.

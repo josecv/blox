@@ -11,6 +11,14 @@ namespace blox {
 class Score : public Text {
  public:
   /**
+   * Restart the game.
+   */
+  void reset() {
+    _score = 0;
+    _level = 0;
+  }
+
+  /**
    * Get the current score.
    * @return the score
    */

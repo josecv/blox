@@ -39,17 +39,55 @@ Blox::~Blox() {
 }
 
 void Blox::run() {
-  bool quit = false;
+  bool keepGoing = true;
+  while (keepGoing) {
+    keepGoing = runMenu();
+    keepGoing = keepGoing && runGame();
+  }
+}
+
+bool Blox::runMenu() {
+  bool retval = true;
+  bool keepGoing = true;
   SDL_Event e;
+  _window.addObject(&_menu);
+  while (keepGoing) {
+    while (SDL_PollEvent(&e) != 0) {
+      if (e.type == SDL_QUIT) {
+        keepGoing = false;
+        retval = false;
+      }
+    }
+    MenuOption option;
+    if (_menu.handleKeypress(&option)) {
+      keepGoing = false;
+      if (option == OPTION_START) {
+        retval = true;
+      } else if (option == OPTION_QUIT) {
+        retval = false;
+      }
+    }
+    _window.render();
+  }
+  _window.removeObject(&_menu);
+  return retval;
+}
+
+bool Blox::runGame() {
+  bool keepGoing = true;
+  bool retval = true;
+  SDL_Event e;
+  _score.reset();
 
   Bottom bottom(&_gridRenderer);
   _window.addObject(&bottom);
   getNextPiece(&bottom);
 
-  while (!quit) {
+  while (keepGoing) {
     while (SDL_PollEvent(&e) != 0) {
       if (e.type == SDL_QUIT) {
-        quit = true;
+        keepGoing = false;
+        retval = false;
       }
     }
     handleKeypress(_currentPiece);
@@ -61,11 +99,23 @@ void Blox::run() {
       }
       if (bottom.hitsTop()) {
         printf("Game over!\n");
-        quit = true;
+        keepGoing = false;
       }
     }
     _window.render();
   }
+  _window.removeObject(&bottom);
+  if (_currentPiece != NULL) {
+    _window.removeObject(_currentPiece);
+    delete _currentPiece;
+    _currentPiece = NULL;
+  }
+  if (_nextPiece != NULL) {
+    _window.removeObject(_nextPiece);
+    delete _nextPiece;
+    _nextPiece = NULL;
+  }
+  return retval;
 }
 
 void Blox::handleKeypress(Piece *piece) {
