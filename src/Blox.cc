@@ -1,6 +1,8 @@
+#include <SDL_image.h>
+#include <ctime>
+#include <cstdlib>
 #include "Blox.h"
 #include "IPiece.h"
-#include <SDL_image.h>
 #include "Logger.h"
 #include "InitializationException.h"
 
@@ -26,6 +28,7 @@ Blox::Blox() : _window(SCREEN_WIDTH, SCREEN_HEIGHT),
   }
   _gridRenderer.setPieceTexture(_pieceTexture);
   _nextPieceRenderer.setPieceTexture(_pieceTexture);
+  srand(time(NULL));
 }
 
 Blox::~Blox() {
@@ -99,5 +102,12 @@ void Blox::getNextPiece(Bottom *bottom) {
 }
 
 Piece* Blox::getRandomPiece() {
-  return new IPiece(&_gridRenderer, _score.getFallDealy());
+  PieceType type = (PieceType) (rand() % PIECE_LAST);
+  switch (type) {
+    case PIECE_I:
+      return new IPiece(&_gridRenderer, _score.getFallDealy());
+    default:
+      Logger::error("Wrong piece " + std::to_string(type), "Blox::getRandomPiece");
+  }
+  return NULL;
 }
