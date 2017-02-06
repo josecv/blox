@@ -98,7 +98,6 @@ bool Blox::runGame() {
         _score.clearLines(clear);
       }
       if (bottom.hitsTop()) {
-        printf("Game over!\n");
         keepGoing = false;
       }
     }
