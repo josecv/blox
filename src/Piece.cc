@@ -28,12 +28,13 @@ bool Piece::fall(Bottom *bottom) {
   }
   /* We'll reuse the side movement velocity for the rotation velocity. */
   if (_inRotation && ((ticks - _timeRotation) >= SIDE_PUSH_VELOCITY)) {
+    int oldRotation = _rotation;
     _rotation = (_rotation + 1) % 4;
     /* Make sure the rotation is sound. If it isn't revert it */
     if (!(checkLeft(_xpos, bottom) &&
           checkRight(_xpos, bottom) &&
           !hitsFloor(_ypos, bottom))) {
-      _rotation = (_rotation - 1) % 4;
+      _rotation = oldRotation;
     }
     _inRotation = false;
   }

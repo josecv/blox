@@ -11,6 +11,16 @@ namespace blox {
 class Score : public Text {
  public:
   /**
+   * How many lines there are in each level.
+   */
+  const static int LINES_PER_LEVEL = 10;
+
+  /**
+   * The delay decrement per level.
+   */
+  const static int DELAY_DECREMENT = 50;
+
+  /**
    * Restart the game.
    */
   void reset() {
@@ -45,7 +55,7 @@ class Score : public Text {
    * level.
    * @return the delay.
    */
-  int getFallDealy();
+  int getFallDelay();
 
   bool render(SDL_Renderer *renderer);
 

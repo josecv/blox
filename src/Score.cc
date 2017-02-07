@@ -1,5 +1,6 @@
 #include <string>
 #include "Score.h"
+#include <iostream>
 
 using namespace blox;
 
@@ -15,7 +16,7 @@ typedef enum _scoreID {
 
 void Score::clearLines(int lines) {
   _lines += lines;
-  if ((_lines % 10) == 0) {
+  if (_lines >= ((_level + 1) * LINES_PER_LEVEL)) {
     _level++;
   }
   int scoreDelta = 0;
@@ -36,11 +37,11 @@ void Score::clearLines(int lines) {
   _score += scoreDelta * (_level + 1);
 }
 
-int Score::getFallDealy() {
+int Score::getFallDelay() {
   if (_level >= 20) {
     return 100;
   }
-  return 1000 - (_level * 50);
+  return 1000 - (_level * DELAY_DECREMENT);
 }
 
 bool Score::render(SDL_Renderer *renderer) {

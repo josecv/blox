@@ -72,6 +72,14 @@ class Piece : public Object {
    */
   void place(Bottom *bottom);
 
+  /**
+   * Set the fall delay.
+   * @param delay the new fall delay.
+   */
+  void setFallDelay(Uint32 delay) {
+    _timeToFall = delay;
+  }
+
   bool render(SDL_Renderer *renderer);
 
  protected:

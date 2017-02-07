@@ -99,6 +99,10 @@ bool Blox::runGame() {
       int clear = bottom.clearRows();
       if (clear > 0) {
         _score.clearLines(clear);
+        /* We might have changed level, so make sure the upcoming piece
+         * has the right piece */
+        _currentPiece->setFallDelay(_score.getFallDelay());
+        _nextPiece->setFallDelay(_score.getFallDelay());
       }
       if (bottom.hitsTop()) {
         keepGoing = false;
@@ -157,13 +161,13 @@ Piece* Blox::getRandomPiece() {
   PieceType type = (PieceType) (rand() % PIECE_LAST);
   switch (type) {
     case PIECE_I:
-      return new IPiece(&_gridRenderer, _score.getFallDealy());
+      return new IPiece(&_gridRenderer, _score.getFallDelay());
     case PIECE_J:
-      return new JPiece(&_gridRenderer, _score.getFallDealy());
+      return new JPiece(&_gridRenderer, _score.getFallDelay());
     case PIECE_L:
-      return new LPiece(&_gridRenderer, _score.getFallDealy());
+      return new LPiece(&_gridRenderer, _score.getFallDelay());
     case PIECE_O:
-      return new OPiece(&_gridRenderer, _score.getFallDealy());
+      return new OPiece(&_gridRenderer, _score.getFallDelay());
     default:
       Logger::error("Wrong piece " + std::to_string(type), "Blox::getRandomPiece");
   }
