@@ -2,9 +2,10 @@
 #include <ctime>
 #include <cstdlib>
 #include "Blox.h"
-#include "IPiece.h"
 #include "Logger.h"
 #include "InitializationException.h"
+#include "IPiece.h"
+#include "JPiece.h"
 
 using namespace blox;
 
@@ -155,6 +156,8 @@ Piece* Blox::getRandomPiece() {
   switch (type) {
     case PIECE_I:
       return new IPiece(&_gridRenderer, _score.getFallDealy());
+    case PIECE_J:
+      return new JPiece(&_gridRenderer, _score.getFallDealy());
     default:
       Logger::error("Wrong piece " + std::to_string(type), "Blox::getRandomPiece");
   }

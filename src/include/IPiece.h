@@ -26,4 +26,4 @@ class IPiece : public Piece {
 
 };
 
-#endif
+#endif /* BLOX_LPIECE_H */

@@ -4,8 +4,8 @@
 namespace blox {
 typedef enum {
   PIECE_I = 0,
-  PIECE_LAST,
   PIECE_J,
+  PIECE_LAST,
   PIECE_L,
   PIECE_O,
   PIECE_S,
