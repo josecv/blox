@@ -2,7 +2,6 @@
 #include "Grid.h"
 #include "Frame.h"
 #include "PieceType.h"
-#include <iostream>
 
 using namespace blox;
 

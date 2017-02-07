@@ -8,6 +8,7 @@
 #include "JPiece.h"
 #include "LPiece.h"
 #include "OPiece.h"
+#include "SPiece.h"
 
 using namespace blox;
 
@@ -168,6 +169,8 @@ Piece* Blox::getRandomPiece() {
       return new LPiece(&_gridRenderer, _score.getFallDelay());
     case PIECE_O:
       return new OPiece(&_gridRenderer, _score.getFallDelay());
+    case PIECE_S:
+      return new SPiece(&_gridRenderer, _score.getFallDelay());
     default:
       Logger::error("Wrong piece " + std::to_string(type), "Blox::getRandomPiece");
   }

@@ -7,8 +7,8 @@ typedef enum {
   PIECE_J,
   PIECE_L,
   PIECE_O,
-  PIECE_LAST,
   PIECE_S,
+  PIECE_LAST,
   PIECE_T,
   PIECE_Z,
 } PieceType;
