@@ -1,5 +1,5 @@
-#ifndef BLOX_LPIECE_H
-#define BLOX_LPIECE_H
+#ifndef BLOX_IPIECE_H
+#define BLOX_IPIECE_H
 #include "Piece.h"
 #include <functional>
 
@@ -26,4 +26,4 @@ class IPiece : public Piece {
 
 };
 
-#endif /* BLOX_LPIECE_H */
+#endif /* BLOX_IPIECE_H */

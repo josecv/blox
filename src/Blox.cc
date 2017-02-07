@@ -6,6 +6,7 @@
 #include "InitializationException.h"
 #include "IPiece.h"
 #include "JPiece.h"
+#include "LPiece.h"
 
 using namespace blox;
 
@@ -158,6 +159,8 @@ Piece* Blox::getRandomPiece() {
       return new IPiece(&_gridRenderer, _score.getFallDealy());
     case PIECE_J:
       return new JPiece(&_gridRenderer, _score.getFallDealy());
+    case PIECE_L:
+      return new LPiece(&_gridRenderer, _score.getFallDealy());
     default:
       Logger::error("Wrong piece " + std::to_string(type), "Blox::getRandomPiece");
   }
