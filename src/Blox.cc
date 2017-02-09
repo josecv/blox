@@ -112,6 +112,9 @@ bool Blox::runGame() {
 }
 
 bool Blox::gameStep() {
+  if (_bottom.isPaused()) {
+    return true;
+  }
   bool retval = true;
   handleKeypress(_currentPiece);
   if (_currentPiece->fall(&_bottom)) {

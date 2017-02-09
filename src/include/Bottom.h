@@ -9,6 +9,7 @@ namespace blox {
 /**
  * The bottom of the playing field, containing the pieces that
  * have fallen there.
+ * Runs a little animation when rows are cleared, flashing them repeatedly.
  */
 class Bottom : public Object {
  public:
@@ -57,6 +58,13 @@ class Bottom : public Object {
    */
   void reset();
 
+  /**
+   * Return whether the bottom is paused for an animation.
+   */
+  bool isPaused() {
+    return _paused;
+  }
+
   bool render(SDL_Renderer *renderer);
 
  private:
@@ -71,6 +79,16 @@ class Bottom : public Object {
   const static int INTERNAL_HEIGHT = Grid::GRID_HEIGHT + NUMBER_GHOST;
 
   /**
+   * The delay for the animation of a row clear.
+   */
+  const static Uint32 ANIMATION_DELAY = 150;
+
+  /**
+   * The total number of animation steps.
+   */
+  const static int ANIMATION_STEPS = 4;
+
+  /**
    * The renderer for the grid.
    */
   Grid *_gridRenderer;
@@ -81,6 +99,47 @@ class Bottom : public Object {
    * the least significant halfbyte indicates its colour.
    */
   Uint8 _grid[INTERNAL_HEIGHT][Grid::GRID_WIDTH];
+
+  /**
+   * Whether this is paused for an animation.
+   */
+  bool _paused;
+
+  /**
+   * A struct containing info for the current ongoing row clear.
+   * Values only meaningful if _paused is true.
+   */
+  struct _RowClear {
+    /**
+     * How Many rows have been cleared.
+     */
+    int cleared;
+
+    /**
+     * The cleared rows.
+     */
+    int rows[4];
+    
+    /**
+     * The step of the row clear animation.
+     */
+    int step;
+
+    /**
+     * The tick count as of the last step of the animation.
+     */
+    Uint32 timeLastStep;
+  } _rowClear;
+
+  /**
+   * Removed the rows that have been cleared. Also unsets pause status.
+   */
+  void removeClearedRows();
+
+  /**
+   * Return whether the row given should be rendered.
+   */
+  bool shouldRenderRow(int row);
 };
 
 };

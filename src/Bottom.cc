@@ -5,7 +5,7 @@
 using namespace blox;
 
 
-Bottom::Bottom(Grid *grid) : _gridRenderer(grid) {
+Bottom::Bottom(Grid *grid) : _gridRenderer(grid), _paused(false) {
   memset(_grid, 0, sizeof(char) * INTERNAL_HEIGHT * Grid::GRID_WIDTH);
 }
 
@@ -28,10 +28,12 @@ void Bottom::place(int xgrid, int ygrid, PieceType piece) {
 bool Bottom::render(SDL_Renderer *renderer) {
   bool okay = true;
   for (int y = NUMBER_GHOST; y < INTERNAL_HEIGHT; y++) {
-    for (int x = 0; x < Grid::GRID_WIDTH; x++) {
-      if (_grid[y][x] & 0xF0) {
-        PieceType piece = static_cast<PieceType>(_grid[y][x] & 0x0F);
-        _gridRenderer->renderBlock(x, y - NUMBER_GHOST, renderer, piece);
+    if (shouldRenderRow(y)) {
+      for (int x = 0; x < Grid::GRID_WIDTH; x++) {
+        if (_grid[y][x] & 0xF0) {
+          PieceType piece = static_cast<PieceType>(_grid[y][x] & 0x0F);
+          _gridRenderer->renderBlock(x, y - NUMBER_GHOST, renderer, piece);
+        }
       }
     }
   }
@@ -39,9 +41,9 @@ bool Bottom::render(SDL_Renderer *renderer) {
 }
 
 int Bottom::clearRows() {
-  int cleared = 0;
-  /* Won't ever clear more than 4 anyway. */
-  int rows[4];
+  _rowClear.cleared = 0;
+  _rowClear.step = 0;
+  _rowClear.timeLastStep = SDL_GetTicks();
   for (int y = NUMBER_GHOST; y < INTERNAL_HEIGHT; y++) {
     bool clear = true;
     for (int x = 0; x < Grid::GRID_WIDTH; x++) {
@@ -51,19 +53,12 @@ int Bottom::clearRows() {
       }
     }
     if (clear) {
-      rows[cleared] = y;
-      cleared++;
+      _rowClear.rows[_rowClear.cleared] = y;
+      _rowClear.cleared++;
     }
   }
-  /* Now time to push everything down */
-  for (int i = 0; i < cleared; i++) {
-    int row = rows[i];
-    for (int y = row - 1; y >= 0; y--) {
-      memcpy(_grid[y + 1], _grid[y], sizeof(char) * Grid::GRID_WIDTH);
-      memset(_grid[y], 0, sizeof(char) * Grid::GRID_WIDTH);
-    }
-  }
-  return cleared;
+  _paused = (_rowClear.cleared > 0);
+  return _rowClear.cleared;
 }
 
 bool Bottom::hitsTop() {
@@ -79,4 +74,37 @@ bool Bottom::hitsTop() {
 
 void Bottom::reset() {
   memset(_grid, 0, sizeof(char) * INTERNAL_HEIGHT * Grid::GRID_WIDTH);
+}
+
+void Bottom::removeClearedRows() {
+  for (int i = 0; i < _rowClear.cleared; i++) {
+    int row = _rowClear.rows[i];
+    for (int y = row - 1; y >= 0; y--) {
+      memcpy(_grid[y + 1], _grid[y], sizeof(char) * Grid::GRID_WIDTH);
+      memset(_grid[y], 0, sizeof(char) * Grid::GRID_WIDTH);
+    }
+  }
+  _paused = false;
+}
+
+bool Bottom::shouldRenderRow(int row) {
+  if (!_paused) {
+    return true;
+  }
+  Uint32 ticks = SDL_GetTicks();
+  if ((ticks - _rowClear.timeLastStep) >= ANIMATION_DELAY) {
+    _rowClear.timeLastStep = ticks;
+    _rowClear.step++;
+    if (_rowClear.step >= ANIMATION_STEPS) {
+      removeClearedRows();
+      return true;
+    }
+  }
+  if (_rowClear.step % 2) {
+    return true;
+  }
+  return !(_rowClear.rows[0] == row
+        || _rowClear.rows[1] == row
+        || _rowClear.rows[2] == row
+        || _rowClear.rows[3] == row);
 }
