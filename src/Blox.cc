@@ -94,21 +94,7 @@ bool Blox::runGame() {
         retval = false;
       }
     }
-    handleKeypress(_currentPiece);
-    if (_currentPiece->fall(&_bottom)) {
-      getNextPiece();
-      int clear = _bottom.clearRows();
-      if (clear > 0) {
-        _score.clearLines(clear);
-        /* We might have changed level, so make sure the upcoming piece
-         * has the right piece */
-        _currentPiece->setFallDelay(_score.getFallDelay());
-        _nextPiece->setFallDelay(_score.getFallDelay());
-      }
-      if (_bottom.hitsTop()) {
-        keepGoing = false;
-      }
-    }
+    keepGoing = keepGoing && gameStep();
     _window.render();
   }
   _bottom.reset();
@@ -121,6 +107,26 @@ bool Blox::runGame() {
     _window.removeObject(_nextPiece);
     delete _nextPiece;
     _nextPiece = NULL;
+  }
+  return retval;
+}
+
+bool Blox::gameStep() {
+  bool retval = true;
+  handleKeypress(_currentPiece);
+  if (_currentPiece->fall(&_bottom)) {
+    getNextPiece();
+    int clear = _bottom.clearRows();
+    if (clear > 0) {
+      _score.clearLines(clear);
+      /* We might have changed level, so make sure the upcoming piece
+       * has the right piece */
+      _currentPiece->setFallDelay(_score.getFallDelay());
+      _nextPiece->setFallDelay(_score.getFallDelay());
+    }
+    if (_bottom.hitsTop()) {
+      retval = false;
+    }
   }
   return retval;
 }

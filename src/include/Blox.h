@@ -98,6 +98,13 @@ class Blox {
   bool runGame();
 
   /**
+   * Run a game step, reading input, and handling any potential
+   * score changes, etc.
+   * @return whether the game should continue
+   */
+  bool gameStep();
+
+  /**
    * Handle a keypress from the user.
    * @param piece the current piece
    */
