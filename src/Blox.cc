@@ -14,9 +14,11 @@ using namespace blox;
 
 Blox::Blox() : _window(SCREEN_WIDTH, SCREEN_HEIGHT),
                _frame(_window.getRenderer()), _pieceTexture(NULL),
-               _currentPiece(NULL), _nextPiece(NULL) {
+               _currentPiece(NULL), _nextPiece(NULL),
+               _bottom(&_gridRenderer) {
   _window.addObject(&_frame);
   _window.addObject(&_score);
+  _window.addObject(&_bottom);
 
   SDL_Surface *surface = IMG_Load("assets/blox_sprite.png");
   if (surface == NULL) {
@@ -83,9 +85,7 @@ bool Blox::runGame() {
   SDL_Event e;
   _score.reset();
 
-  Bottom bottom(&_gridRenderer);
-  _window.addObject(&bottom);
-  getNextPiece(&bottom);
+  getNextPiece();
 
   while (keepGoing) {
     while (SDL_PollEvent(&e) != 0) {
@@ -95,9 +95,9 @@ bool Blox::runGame() {
       }
     }
     handleKeypress(_currentPiece);
-    if (_currentPiece->fall(&bottom)) {
-      getNextPiece(&bottom);
-      int clear = bottom.clearRows();
+    if (_currentPiece->fall(&_bottom)) {
+      getNextPiece();
+      int clear = _bottom.clearRows();
       if (clear > 0) {
         _score.clearLines(clear);
         /* We might have changed level, so make sure the upcoming piece
@@ -105,13 +105,13 @@ bool Blox::runGame() {
         _currentPiece->setFallDelay(_score.getFallDelay());
         _nextPiece->setFallDelay(_score.getFallDelay());
       }
-      if (bottom.hitsTop()) {
+      if (_bottom.hitsTop()) {
         keepGoing = false;
       }
     }
     _window.render();
   }
-  _window.removeObject(&bottom);
+  _bottom.reset();
   if (_currentPiece != NULL) {
     _window.removeObject(_currentPiece);
     delete _currentPiece;
@@ -140,13 +140,13 @@ void Blox::handleKeypress(Piece *piece) {
   }
 }
 
-void Blox::getNextPiece(Bottom *bottom) {
+void Blox::getNextPiece() {
   if (_currentPiece == NULL) {
     /* Are we starting up? */
     _currentPiece = getRandomPiece();
     _window.addObject(_currentPiece);
   } else {
-    _currentPiece->place(bottom);
+    _currentPiece->place(&_bottom);
     _window.removeObject(_currentPiece);
     delete _currentPiece;
     _currentPiece = _nextPiece;

@@ -76,3 +76,7 @@ bool Bottom::hitsTop() {
   }
   return false;
 }
+
+void Bottom::reset() {
+  memset(_grid, 0, sizeof(char) * INTERNAL_HEIGHT * Grid::GRID_WIDTH);
+}

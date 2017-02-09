@@ -52,6 +52,11 @@ class Bottom : public Object {
    */
   bool hitsTop();
 
+  /**
+   * Empty the grid.
+   */
+  void reset();
+
   bool render(SDL_Renderer *renderer);
 
  private:

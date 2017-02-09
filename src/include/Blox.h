@@ -76,6 +76,11 @@ class Blox {
   Grid _gridRenderer;
 
   /**
+   * The bottom, containing the pieces that have fallen.
+   */
+  Bottom _bottom;
+
+  /**
    * The renderer for the next piece.
    */
   NextPieceGrid _nextPieceRenderer;
@@ -101,9 +106,8 @@ class Blox {
   /**
    * Put the next piece into the playing field, get rid of the current one
    * and generate the one that's gonna come next.
-   * @param bottom the bottom of the playfield
    */
-  void getNextPiece(Bottom *bottom);
+  void getNextPiece();
 
   /**
    * Generate a random piece.
