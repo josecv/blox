@@ -1,8 +1,13 @@
 project(blox)
 
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+if (DEFINED CMAKE_INSTALL_PREFIX)
+  add_definitions(-DGAME_HOME="${CMAKE_INSTALL_PREFIX}/share/games/blox")
+endif(DEFINED CMAKE_INSTALL_PREFIX)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(GLOB sources src/*.cc)
 add_executable(${PROJECT_NAME} ${sources})
@@ -24,3 +29,6 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS}
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES}
   ${SDL2MIXER_LIBRARIES} ${SDL2TTF_LIBRARIES})
 set (CMAKE_BUILD_TYPE Debug)
+
+INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin")
+INSTALL(DIRECTORY "${CMAKE_BINARY_DIR}/assets" DESTINATION "share/games/blox")
