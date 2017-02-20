@@ -76,7 +76,8 @@ void Window::addObject(Object *o) {
 }
 
 void Window::removeObject(Object *o) {
-  _objects.erase(std::remove(_objects.begin(), _objects.end(), o), _objects.end());
+  _objects.erase(std::remove(_objects.begin(), _objects.end(), o),
+                 _objects.end());
 }
 
 bool Window::render() {
