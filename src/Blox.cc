@@ -27,7 +27,6 @@ Blox::Blox() : _window(SCREEN_WIDTH, SCREEN_HEIGHT),
     Logger::error(IMG_GetError(), "Blox::Blox");
     throw InitializationException("Blox 1");
   }
-  SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0));
   _pieceTexture = SDL_CreateTextureFromSurface(_window.getRenderer(), surface);
   SDL_FreeSurface(surface);
   if (_pieceTexture == NULL) {
