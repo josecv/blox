@@ -38,10 +38,11 @@ void Score::clearLines(int lines) {
 }
 
 int Score::getFallDelay() {
-  if (_level >= 20) {
-    return 100;
+  int candidate = 1000 - (_level * DELAY_DECREMENT);
+  if (candidate < MIN_FALL_DELAY) {
+    return MIN_FALL_DELAY;
   }
-  return 1000 - (_level * DELAY_DECREMENT);
+  return candidate;
 }
 
 bool Score::render(SDL_Renderer *renderer) {

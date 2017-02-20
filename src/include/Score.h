@@ -21,6 +21,11 @@ class Score : public Text {
   const static int DELAY_DECREMENT = 50;
 
   /**
+   * The minimum possible fall delay.
+   */
+  const static int MIN_FALL_DELAY = 100;
+
+  /**
    * Restart the game.
    */
   void reset() {
